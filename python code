@@ -1,0 +1,35 @@
+import psycopg2
+
+# Database connection parameters
+db_params = {
+    'host': 'your_host',
+    'database': 'your_database',
+    'user': 'your_user',
+    'password': 'your_password'
+}
+
+# Establishing a connection to the database
+try:
+    connection = psycopg2.connect(**db_params)
+    cursor = connection.cursor()
+
+    # Executing the SELECT query
+    select_query = "SELECT * FROM darshan_table;"
+    cursor.execute(select_query)
+
+    # Fetching all the rows from the result
+    rows = cursor.fetchall()
+
+    # Printing the fetched rows
+    for row in rows:
+        print(row)
+
+except (Exception, psycopg2.Error) as error:
+    print("Error while connecting to PostgreSQL:", error)
+
+finally:
+    # Closing the cursor and connection
+    if cursor:
+        cursor.close()
+    if connection:
+        connection.close()
